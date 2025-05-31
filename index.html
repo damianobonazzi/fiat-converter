@@ -82,14 +82,18 @@
 }
 
 .input-group button {
-  font-size: 0.9em;
-  padding: 0.5em 0.7em;
+  font-size: 1.2em; /* grandezza dell’icona */
+  padding: 0.3em 0.5em;
   border: 1px solid #ccc;
   border-left: none;
   border-radius: 0 6px 6px 0;
   background-color: #f7931a;
   color: white;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
     
     #rate-info {
@@ -184,7 +188,9 @@
   <span class="field-label">EUR</span>
   <div class="input-group">
     <input type="text" id="fiat" />
-    <button onclick="copyToClipboard('fiat')">Copy</button>
+    <button onclick="copyToClipboard('fiat')" title="Copy to clipboard">
+      📋
+    </button>
   </div>
 </div>
 
@@ -192,7 +198,9 @@
   <span class="field-label">BTC</span>
   <div class="input-group">
     <input type="text" id="btc" />
-    <button onclick="copyToClipboard('fiat')">Copy</button>
+    <button onclick="copyToClipboard('fiat')" title="Copy to clipboard">
+      📋
+    </button>
   </div>
 </div>
 
@@ -200,7 +208,9 @@
   <span class="field-label">SATS</span>
   <div class="input-group">
     <input type="text" id="sats" />
-    <button onclick="copyToClipboard('fiat')">Copy</button>
+    <button onclick="copyToClipboard('fiat')" title="Copy to clipboard">
+      📋
+    </button>
   </div>
 </div>
 
