@@ -31,11 +31,15 @@ const exchanges = [
 // === Handle separator toggle ===
 toggle.addEventListener("change", () => {
   useComma = toggle.checked;
-  // Prima riformatta il campo FIAT con il nuovo separatore
-  if (!isNaN(parseInput(fiatInput.value))) {
-    fiatInput.value = formatOutput(parseInput(fiatInput.value), 2);
+
+  // Riformatta il campo FIAT solo se il valore è valido
+  const value = fiatInput.value;
+  const num = parseInput(value);
+  if (!isNaN(num)) {
+    fiatInput.value = formatOutput(num, 2);
   }
-  // Poi aggiorna tutti gli altri valori come già previsto
+
+  // Aggiorna gli altri campi
   updateValues("fiat");
 });
 
