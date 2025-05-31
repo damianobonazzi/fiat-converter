@@ -16,14 +16,13 @@
       margin: auto;
     }
 
-    .row {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1em;
-      flex-wrap: wrap;
-      gap: 0.5em;
-    }
-
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 1em;
+  flex-wrap: wrap;
+}
     .row input {
       flex: 1;
       font-size: 1.2em;
@@ -44,11 +43,11 @@
     }
     
 .field-label {
+  width: 40px;
   font-weight: bold;
-  margin-bottom: 0.2em;
-  font-size: 0.95em;
-  color: #444;
-  align-self: flex-start;
+  font-size: 1em;
+  text-align: right;
+  flex-shrink: 0;
 }
 
 .field-actions {
@@ -65,6 +64,32 @@
   color: white;
   border: none;
   border-radius: 6px;
+}
+    .input-group {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.input-group input {
+  flex: 1;
+  font-size: 1.2em;
+  padding: 0.5em;
+  text-align: right;
+  border-radius: 6px 0 0 6px;
+  border: 1px solid #ccc;
+  border-right: none;
+}
+
+.input-group button {
+  font-size: 0.9em;
+  padding: 0.5em 0.7em;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  background-color: #f7931a;
+  color: white;
+  cursor: pointer;
 }
     
     #rate-info {
@@ -156,25 +181,25 @@
   <h1>FiatConverter</h1>
 
 <div class="row">
-  <label class="field-label">EUR</label>
-  <input type="text" id="fiat" />
-  <div class="field-actions">
+  <span class="field-label">EUR</span>
+  <div class="input-group">
+    <input type="text" id="fiat" />
     <button onclick="copyToClipboard('fiat')">Copy</button>
   </div>
 </div>
 
 <div class="row">
-  <label class="field-label">BTC</label>
-  <input type="text" id="btc" />
-  <div class="field-actions">
+  <span class="field-label">BTC</span>
+  <div class="input-group">
+    <input type="text" id="btc" />
     <button onclick="copyToClipboard('fiat')">Copy</button>
   </div>
 </div>
 
 <div class="row">
-  <label class="field-label">SATS</label>
-  <input type="text" id="sats" />
-  <div class="field-actions">
+  <span class="field-label">SATS</span>
+  <div class="input-group">
+    <input type="text" id="sats" />
     <button onclick="copyToClipboard('fiat')">Copy</button>
   </div>
 </div>
