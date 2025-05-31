@@ -1,62 +1,130 @@
-// Supported exchanges and endpoints
-const EXCHANGES = [
-  { name: 'Kraken', url: 'https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR' },
-  { name: 'Binance', url: 'https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR' },
-  { name: 'Bitstamp', url: 'https://www.bitstamp.net/api/v2/ticker/btceur/' },
-  { name: 'Coinbase', url: 'https://api.coinbase.com/v2/prices/BTC-EUR/spot' },
-  { name: 'Bitfinex', url: 'https://api-pub.bitfinex.com/v2/ticker/tBTCUSD' }
-];
-
-// Copy the value of an input to clipboard
+// === Helper to copy values to clipboard ===
 function copyToClipboard(id) {
   const el = document.getElementById(id);
   el.select();
-  document.execCommand('copy');
+  document.execCommand("copy");
 }
 
-// Format number using chosen separator
-function formatNumber(value, separator) {
-  return value.toString().replace('.', separator);
+// === State and config ===
+let currentRate = 0;
+let currentExchange = "";
+let useComma = false;
+let currency = "EUR";
+
+const fiatInput = document.getElementById("fiat");
+const btcInput = document.getElementById("btc");
+const satsInput = document.getElementById("sats");
+const toggle = document.getElementById("decimal-toggle");
+const currencySelect = document.getElementById("currency");
+const rateInfo = document.getElementById("rate-info");
+const circleProgress = document.getElementById("circle-progress");
+
+// === API endpoints for exchanges ===
+const exchanges = [
+  { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR" },
+  { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR" },
+  { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btceur/" },
+  { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-EUR/spot" },
+  { name: "Bitfinex", url: "https://api.bitfinex.com/v1/pubticker/btceur" }
+];
+
+// === Handle separator toggle ===
+toggle.addEventListener("change", () => {
+  useComma = toggle.checked;
+  updateValues("fiat");
+});
+
+// === Handle currency change ===
+currencySelect.addEventListener("change", () => {
+  currency = currencySelect.value;
+  document.getElementById("fiat-label").textContent = currency;
+  updateRates();
+});
+
+// === Convert formatted input to number ===
+function parseInput(value) {
+  if (useComma) value = value.replace(",", ".");
+  return parseFloat(value);
 }
 
-// Convert fiat to BTC and SATS
-async function convert() {
-  const fiat = parseFloat(document.getElementById('fiat-input').value.replace(',', '.'));
-  const currency = document.getElementById('currency-select').value;
-  const separator = document.getElementById('decimal-toggle').value;
+// === Format number for output ===
+function formatOutput(value, decimals = 8) {
+  let str = value.toFixed(decimals);
+  if (useComma) str = str.replace(".", ",");
+  return str;
+}
 
-  if (isNaN(fiat)) return;
+// === Handle input events ===
+fiatInput.addEventListener("input", () => updateValues("fiat"));
+btcInput.addEventListener("input", () => updateValues("btc"));
+satsInput.addEventListener("input", () => updateValues("sats"));
 
-  // Fetch all prices and calculate median
-  const prices = await Promise.all(EXCHANGES.map(e => fetch(e.url)
-    .then(res => res.json())
-    .then(data => {
-      if (e.name === 'Kraken') return parseFloat(data.result.XXBTZEUR.c[0]);
-      if (e.name === 'Binance') return parseFloat(data.price);
-      if (e.name === 'Bitstamp') return parseFloat(data.last);
-      if (e.name === 'Coinbase') return parseFloat(data.data.amount);
-      if (e.name === 'Bitfinex') return parseFloat(data[6]); // BTC/USD only
-    }).catch(() => null)
+// === Main conversion logic ===
+function updateValues(source) {
+  const fiatVal = parseInput(fiatInput.value);
+  const btcVal = parseInput(btcInput.value);
+  const satsVal = parseInput(satsInput.value);
+
+  if (!currentRate) return;
+
+  if (source === "fiat" && !isNaN(fiatVal)) {
+    const btc = fiatVal / currentRate;
+    const sats = btc * 1e8;
+    btcInput.value = formatOutput(btc);
+    satsInput.value = Math.round(sats);
+  } else if (source === "btc" && !isNaN(btcVal)) {
+    const fiat = btcVal * currentRate;
+    const sats = btcVal * 1e8;
+    fiatInput.value = formatOutput(fiat, 2);
+    satsInput.value = Math.round(sats);
+  } else if (source === "sats" && !isNaN(satsVal)) {
+    const btc = satsVal / 1e8;
+    const fiat = btc * currentRate;
+    btcInput.value = formatOutput(btc);
+    fiatInput.value = formatOutput(fiat, 2);
+  }
+}
+
+// === Get BTC rate from multiple exchanges and compute median ===
+async function updateRates() {
+  const suffix = currency === "EUR" ? "eur" : "usd";
+  const updated = await Promise.all(exchanges.map(ex =>
+    fetch(ex.url.replace(/eur/gi, suffix))
+      .then(res => res.json())
+      .then(data => {
+        try {
+          if (ex.name === "Kraken") return { name: ex.name, rate: parseFloat(Object.values(data.result)[0].c[0]) };
+          if (ex.name === "Binance") return { name: ex.name, rate: parseFloat(data.price) };
+          if (ex.name === "Bitstamp") return { name: ex.name, rate: parseFloat(data.last) };
+          if (ex.name === "Coinbase") return { name: ex.name, rate: parseFloat(data.data.amount) };
+          if (ex.name === "Bitfinex") return { name: ex.name, rate: parseFloat(data.last_price) };
+        } catch {
+          return null;
+        }
+      }).catch(() => null)
   ));
 
-  const validPrices = prices.filter(p => p && !isNaN(p));
-  if (validPrices.length === 0) return;
-
-  // For USD, convert BTC/USD to BTC/EUR approximation using average EUR/USD ~1.08
-  let btcPrice = median(validPrices);
-  if (currency === 'USD') btcPrice = btcPrice / 1.08;
-
-  const btc = fiat / btcPrice;
-  const sats = btc * 100000000;
-
-  // Update outputs with proper formatting
-  document.getElementById('btc-output').value = formatNumber(btc.toFixed(8), separator);
-  document.getElementById('sats-output').value = formatNumber(sats.toFixed(0), separator);
+  const valid = updated.filter(e => e && !isNaN(e.rate)).sort((a, b) => a.rate - b.rate);
+  if (valid.length > 0) {
+    const mid = Math.floor(valid.length / 2);
+    currentRate = valid[mid].rate;
+    currentExchange = valid[mid].name;
+    rateInfo.textContent = `Median Rate = ${currentRate.toFixed(2)} ${currency} (${currentExchange})`;
+    updateValues("fiat");
+  }
 }
 
-// Helper function to calculate median
-function median(values) {
-  values.sort((a, b) => a - b);
-  const mid = Math.floor(values.length / 2);
-  return values.length % 2 !== 0 ? values[mid] : (values[mid - 1] + values[mid]) / 2;
-}
+// === Animate circular progress bar every second ===
+let progress = 0;
+setInterval(() => {
+  progress++;
+  if (progress >= 30) {
+    updateRates();
+    progress = 0;
+  }
+  const percent = (progress / 30) * 100;
+  circleProgress.setAttribute("stroke-dasharray", `${percent}, 100`);
+}, 1000);
+
+// === Initial rate fetch ===
+updateRates();
