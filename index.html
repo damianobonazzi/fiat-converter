@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fiat Converter</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <h1>Fiat Converter</h1>
+
+    <!-- Toggle for decimal separator -->
+    <label>
+      Decimal separator:
+      <select id="decimal-toggle">
+        <option value=".">Dot (.)</option>
+        <option value=",">Comma (,)</option>
+      </select>
+    </label>
+
+    <!-- Currency selector -->
+    <label>
+      Select fiat currency:
+      <select id="currency-select">
+        <option value="EUR">EUR</option>
+        <option value="USD">USD</option>
+      </select>
+    </label>
+
+    <!-- Input field for fiat amount -->
+    <div class="field">
+      <input id="fiat-input" type="text" placeholder="Enter amount in fiat" />
+      <button onclick="copyToClipboard('fiat-input')">Copy</button>
+    </div>
+
+    <!-- BTC result field -->
+    <div class="field">
+      <input id="btc-output" type="text" readonly />
+      <button onclick="copyToClipboard('btc-output')">Copy</button>
+    </div>
+
+    <!-- SATS result field -->
+    <div class="field">
+      <input id="sats-output" type="text" readonly />
+      <button onclick="copyToClipboard('sats-output')">Copy</button>
+    </div>
+
+    <!-- Convert button -->
+    <button onclick="convert()">Convert</button>
+
+    <!-- Timer circle for refresh (not active since refresh is on input) -->
+    <div class="timer-circle" id="timer-circle"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
