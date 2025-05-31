@@ -5,53 +5,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fiat Converter</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+<meta name="theme-color" content="#f7931a" />
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1em;
+      background: #fff;
+      color: #333;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1em;
+    }
+
+    .row input {
+      flex: 1;
+      font-size: 1.5em;
+      padding: 0.5em;
+      text-align: right;
+    }
+
+    .row span {
+      width: 60px;
+      margin-left: 0.5em;
+      font-weight: bold;
+    }
+
+    .row button {
+      margin-left: 0.5em;
+    }
+
+    #rate-info {
+      margin-top: 1em;
+      font-size: 1em;
+      color: #666;
+    }
+
+    #circle-container {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    svg circle {
+      stroke: #f7931a;
+      stroke-width: 4;
+      fill: none;
+      stroke-dasharray: 0, 100;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+  </style>
 </head>
 <body>
-  <div class="app">
-    <h1>Fiat Converter</h1>
+  <h1>FiatConverter</h1>
 
-    <!-- Toggle for decimal separator -->
-    <label>
-      Decimal separator:
-      <select id="decimal-toggle">
-        <option value=".">Dot (.)</option>
-        <option value=",">Comma (,)</option>
-      </select>
-    </label>
+  <div class="row">
+    <input type="text" id="fiat" placeholder="0" />
+    <span id="fiat-label">EUR</span>
+    <button onclick="copyToClipboard('fiat')">Copy</button>
+  </div>
 
-    <!-- Currency selector -->
-    <label>
-      Select fiat currency:
-      <select id="currency-select">
-        <option value="EUR">EUR</option>
-        <option value="USD">USD</option>
-      </select>
-    </label>
+  <div class="row">
+    <input type="text" id="btc" placeholder="0" />
+    <span>BTC</span>
+    <button onclick="copyToClipboard('btc')">Copy</button>
+  </div>
 
-    <!-- Input field for fiat amount -->
-    <div class="field">
-      <input id="fiat-input" type="text" placeholder="Enter amount in fiat" />
-      <button onclick="copyToClipboard('fiat-input')">Copy</button>
-    </div>
+  <div class="row">
+    <input type="text" id="sats" placeholder="0" />
+    <span>SATS</span>
+    <button onclick="copyToClipboard('sats')">Copy</button>
+  </div>
 
-    <!-- BTC result field -->
-    <div class="field">
-      <input id="btc-output" type="text" readonly />
-      <button onclick="copyToClipboard('btc-output')">Copy</button>
-    </div>
+  <div class="row">
+    <label for="currency">Currency: </label>
+    <select id="currency">
+      <option value="EUR">EUR</option>
+      <option value="USD">USD</option>
+    </select>
+  </div>
 
-    <!-- SATS result field -->
-    <div class="field">
-      <input id="sats-output" type="text" readonly />
-      <button onclick="copyToClipboard('sats-output')">Copy</button>
-    </div>
+  <div class="row">
+    <label for="decimal-toggle">Use comma:</label>
+    <input type="checkbox" id="decimal-toggle" />
+  </div>
 
-    <!-- Convert button -->
-    <button onclick="convert()">Convert</button>
+  <div id="rate-info">Loading exchange rate...</div>
 
-    <!-- Timer circle for refresh (not active since refresh is on input) -->
-    <div class="timer-circle" id="timer-circle"></div>
+  <div id="circle-container">
+    <svg width="40" height="40">
+      <circle id="circle-progress" r="18" cx="20" cy="20" />
+    </svg>
   </div>
 
   <script src="script.js"></script>
