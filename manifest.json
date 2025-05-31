@@ -4,7 +4,7 @@
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
-  "description": "Convert fiat to BTC and Satoshis easily.",
+  "description": "Convert fiat to BTC and Satoshis and viceversa easily.",
   "icons": [
     {
       "src": "icons/icon-192.png",
