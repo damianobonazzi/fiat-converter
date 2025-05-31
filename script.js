@@ -32,6 +32,10 @@ const exchanges = [
 toggle.addEventListener("change", () => {
   useComma = toggle.checked;
   updateValues("fiat");
+  // Riformatta anche il campo fiat in base al nuovo separatore
+  if (!isNaN(parseInput(fiatInput.value))) {
+    fiatInput.value = formatOutput(parseInput(fiatInput.value), 2);
+  }
 });
 
 // === Handle currency change ===
