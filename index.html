@@ -131,23 +131,29 @@
 <body>
   <h1>FiatConverter</h1>
 
-  <div class="row">
-    <input type="text" id="fiat" placeholder="0" />
-    <span id="fiat-label">EUR</span>
+<div class="row">
+  <label class="field-label">EUR</label>
+  <input type="text" id="fiat" />
+  <div class="field-actions">
     <button onclick="copyToClipboard('fiat')">Copy</button>
   </div>
+</div>
 
-  <div class="row">
-    <input type="text" id="btc" placeholder="0" />
-    <span>BTC</span>
-    <button onclick="copyToClipboard('btc')">Copy</button>
+<div class="row">
+  <label class="field-label">BTC</label>
+  <input type="text" id="btc" />
+  <div class="field-actions">
+    <button onclick="copyToClipboard('fiat')">Copy</button>
   </div>
+</div>
 
-  <div class="row">
-    <input type="text" id="sats" placeholder="0" />
-    <span>SATS</span>
-    <button onclick="copyToClipboard('sats')">Copy</button>
+<div class="row">
+  <label class="field-label">SATS</label>
+  <input type="text" id="sats" />
+  <div class="field-actions">
+    <button onclick="copyToClipboard('fiat')">Copy</button>
   </div>
+</div>
 
   <div class="row">
     <label for="currency">Currency: </label>
