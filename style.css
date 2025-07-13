@@ -1,41 +1,30 @@
-body {
-  font-family: Arial, sans-serif;
+.input-group {
   display: flex;
-  justify-content: center;
-  padding: 20px;
-  background: #f9f9f9;
-}
-
-.app {
-  max-width: 400px;
   width: 100%;
 }
 
-h1 {
-  text-align: center;
+.input-group input {
+  flex: 1;
+  font-size: 1.2em;
+  padding: 0.5em;
+  text-align: right;
+  border-radius: 6px 0 0 6px;
+  border: 1px solid #ccc;
+  border-right: none;
+  min-width: 0;
 }
 
-.field {
+.input-group button {
+  font-size: 1em;
+  padding: 0.5em 0.7em;
+  background-color: #f7931a;
+  color: white;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  margin: 10px 0;
-}
-
-input {
-  font-size: 1.5em;
-  padding: 10px;
-  flex: 1;
-}
-
-button {
-  padding: 10px;
-  margin-left: 10px;
-}
-
-.timer-circle {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-  margin: 10px auto;
+  justify-content: center;
+  min-width: 40px;
 }
