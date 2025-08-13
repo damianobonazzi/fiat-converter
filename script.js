@@ -97,19 +97,7 @@ function updateValues(source) {
 // === Get BTC rate from multiple exchanges and compute median ===
 async function updateRates() {
   const suffix = currency.toLowerCase();
-  const supportedExchanges = exchanges.filter(ex => ex.supportedCurrencies.includes(currency));
 
-  if (supportedExchanges.length === 0) {
-    rateInfo.textContent = `No exchange rate available for ${currency}.`;
-    currentRate = 0;
-    // Clear input fields
-    fiatInput.value = "";
-    btcInput.value = "";
-    satsInput.value = "";
-    return;
-  }
-
-  const updated = await Promise.all(supportedExchanges.map(ex =>
     fetch(ex.url.replace(/eur/gi, suffix))
       .then(res => res.json())
       .then(data => {
