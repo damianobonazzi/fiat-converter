@@ -45,9 +45,25 @@
 .field-label {
   width: 40px;
   font-weight: bold;
-  font-size: 1em;
+  font-size: 1.2em;
   text-align: right;
   flex-shrink: 0;
+}
+
+.row > label {
+    font-size: 1.2em;
+}
+
+select#currency {
+    font-size: 1.2em;
+    padding: 0.5em;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+input[type="checkbox"] {
+    width: 1.5em;
+    height: 1.5em;
 }
 
 .field-actions {
@@ -66,6 +82,12 @@
   border-radius: 6px;
 }
 
+.input-group {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
 .input-group input {
   flex: 1;
   font-size: 1.2em;
@@ -78,10 +100,9 @@
 }
 
 .input-group button {
-  font-size: 1em;
-  padding: 0.2em 0.4em;
-  width: 20px;
-  min-width: unset;
+  font-size: 1.5em;
+  padding: 0.5em 0.7em;
+  min-width: 50px;
   border: 1px solid #ccc;
   border-left: none;
   border-radius: 0 6px 6px 0;
@@ -92,6 +113,11 @@
   align-items: center;
   justify-content: center;
   line-height: 1;
+}
+
+.input-group button svg {
+  width: 1em;
+  height: 1em;
 }
     
     #rate-info {
@@ -127,21 +153,21 @@
   <span class="field-label" id="fiat-label">EUR</span>
   <div class="input-group">
     <input type="text" id="fiat" />
-    <button onclick="copyToClipboard('fiat')" title="Copy to clipboard">📋</button>
+    <button onclick="copyToClipboard('fiat')" title="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
   </div>
 </div>
 <div class="row">
   <span class="field-label">BTC</span>
   <div class="input-group">
     <input type="text" id="btc" />
-    <button onclick="copyToClipboard('btc')" title="Copy to clipboard">📋</button>
+    <button onclick="copyToClipboard('btc')" title="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
   </div>
 </div>
 <div class="row">
   <span class="field-label">SATS</span>
   <div class="input-group">
     <input type="text" id="sats" />
-    <button onclick="copyToClipboard('sats')" title="Copy to clipboard">📋</button>
+    <button onclick="copyToClipboard('sats')" title="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
   </div>
 </div>
 
@@ -150,6 +176,7 @@
     <select id="currency">
       <option value="EUR">EUR</option>
       <option value="USD">USD</option>
+      <option value="CHF">CHF</option>
     </select>
   </div>
 

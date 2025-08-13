@@ -21,11 +21,11 @@ const circleProgress = document.getElementById("circle-progress");
 
 // === API endpoints for exchanges ===
 const exchanges = [
-  { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR" },
-  { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR" },
-  { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btceur/" },
-  { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-EUR/spot" },
-  { name: "Bitfinex", url: "https://api.bitfinex.com/v1/pubticker/btceur" }
+  { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR", supportedCurrencies: ["EUR", "USD"] },
+  { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR", supportedCurrencies: [] },
+  { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btceur/", supportedCurrencies: ["EUR", "USD"] },
+  { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-EUR/spot", supportedCurrencies: ["EUR", "USD", "CHF"] },
+  { name: "Bitfinex", url: "https://api.bitfinex.com/v1/pubticker/btceur", supportedCurrencies: ["EUR", "USD"] }
 ];
 
 // === Handle separator toggle ===
@@ -96,8 +96,20 @@ function updateValues(source) {
 
 // === Get BTC rate from multiple exchanges and compute median ===
 async function updateRates() {
-  const suffix = currency === "EUR" ? "eur" : "usd";
-  const updated = await Promise.all(exchanges.map(ex =>
+  const suffix = currency.toLowerCase();
+  const supportedExchanges = exchanges.filter(ex => ex.supportedCurrencies.includes(currency));
+
+  if (supportedExchanges.length === 0) {
+    rateInfo.textContent = `No exchange rate available for ${currency}.`;
+    currentRate = 0;
+    // Clear input fields
+    fiatInput.value = "";
+    btcInput.value = "";
+    satsInput.value = "";
+    return;
+  }
+
+  const updated = await Promise.all(supportedExchanges.map(ex =>
     fetch(ex.url.replace(/eur/gi, suffix))
       .then(res => res.json())
       .then(data => {
@@ -120,6 +132,9 @@ async function updateRates() {
     currentExchange = valid[mid].name;
     rateInfo.textContent = `Median Rate = ${currentRate.toFixed(2)} ${currency} (${currentExchange})`;
     updateValues("fiat");
+  } else {
+    rateInfo.textContent = `Could not fetch rate for ${currency}.`;
+    currentRate = 0;
   }
 }
 
