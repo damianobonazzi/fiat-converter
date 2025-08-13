@@ -96,7 +96,7 @@ function updateValues(source) {
 
 // === Get BTC rate from multiple exchanges and compute median ===
 async function updateRates() {
-  const suffix = currency === "EUR" ? "eur" : "usd";
+  const suffix = currency.toLowerCase();
   const updated = await Promise.all(exchanges.map(ex =>
     fetch(ex.url.replace(/eur/gi, suffix))
       .then(res => res.json())
