@@ -98,6 +98,19 @@ function updateValues(source) {
 async function updateRates() {
   const suffix = currency.toLowerCase();
 
+  const supportedExchanges = exchanges.filter(ex => ex.supportedCurrencies.includes(currency));
+
+  if (supportedExchanges.length === 0) {
+    rateInfo.textContent = `No exchange rate available for ${currency}.`;
+    currentRate = 0;
+    fiatInput.value = "";
+    btcInput.value = "";
+    satsInput.value = "";
+    return;
+  }
+
+  const updated = await Promise.all(supportedExchanges.map(ex =>
+
     fetch(ex.url.replace(/eur/gi, suffix))
       .then(res => res.json())
       .then(data => {
