@@ -29,21 +29,52 @@ if (emptyAllBtn) {
   });
 }
 
-// === API endpoints for exchanges ===
-const exchanges = [
-  { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR", supportedCurrencies: ["EUR", "USD"] },
-  { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR", supportedCurrencies: ["EUR", "USD"] },
-  { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btceur/", supportedCurrencies: ["EUR", "USD"] },
-  { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-EUR/spot", supportedCurrencies: ["EUR", "USD", "CHF"] },
-  { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price", supportedCurrencies: ["EUR", "USD"] },
-  { name: "Bitfinex", url: "https://api-pub.bitfinex.com/v2/ticker/", supportedCurrencies: ["EUR", "USD", "GBP", "JPY"] },
-  { name: "Gemini", url: "https://api.gemini.com/v2/ticker/", supportedCurrencies: ["EUR", "USD", "GBP", "SGD"] },
-  { name: "CEX.IO", url: "https://cex.io/api/ticker/BTC/", supportedCurrencies: ["EUR", "USD", "GBP"] },
-  { name: "KuCoin", url: "https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=BTC-", supportedCurrencies: ["USDT", "USDC"] },
-  { name: "Bybit", url: "https://api.bybit.com/v5/market/tickers?category=spot&symbol=BTC", supportedCurrencies: ["USDT", "USDC"] },
-  { name: "OKX", url: "https://www.okx.com/api/v5/market/ticker?instId=BTC-", supportedCurrencies: ["USDT", "USDC"] },
-  { name: "Bitget", url: "https://api.bitget.com/api/v2/spot/market/tickers?symbol=BTC", supportedCurrencies: ["USDT", "USDC"] }
-];
+// === Structured API configuration per currency ===
+const exchangeConfigs = {
+  EUR: [
+    { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XBTEUR", parsePrice: d => parseFloat(Object.values(d.result)[0].c[0]) },
+    { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-EUR/spot", parsePrice: d => parseFloat(d.data.amount) },
+    { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btceur/", parsePrice: d => parseFloat(d.last) },
+    { name: "Gemini", url: "https://api.gemini.com/v2/ticker/btceur", parsePrice: d => parseFloat(d.close) },
+    { name: "Bitfinex", url: "https://api-pub.bitfinex.com/v2/ticker/tBTCEUR", parsePrice: d => parseFloat(d[6]) },
+    { name: "CEX.IO", url: "https://cex.io/api/ticker/BTC/EUR", parsePrice: d => parseFloat(d.last) },
+    { name: "KuCoin", url: "https://api.kucoin.com/api/ua/v1/market/ticker?tradeType=SPOT&symbol=BTC-EUR", parsePrice: d => parseFloat(d.data.list[0].lastPrice) },
+    { name: "OKX", url: "https://www.okx.com/api/v5/market/ticker?instId=BTC-EUR", parsePrice: d => parseFloat(d.data[0].last) },
+    { name: "bitFlyer", url: "https://api.bitflyer.com/v1/ticker?product_code=BTC_EUR", parsePrice: d => parseFloat(d.ltp) }
+  ],
+  USD: [
+    { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XBTUSD", parsePrice: d => parseFloat(Object.values(d.result)[0].c[0]) },
+    { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-USD/spot", parsePrice: d => parseFloat(d.data.amount) },
+    { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btcusd/", parsePrice: d => parseFloat(d.last) },
+    { name: "Gemini", url: "https://api.gemini.com/v2/ticker/btcusd", parsePrice: d => parseFloat(d.close) },
+    { name: "Bitfinex", url: "https://api-pub.bitfinex.com/v2/ticker/tBTCUSD", parsePrice: d => parseFloat(d[6]) },
+    { name: "CEX.IO", url: "https://cex.io/api/ticker/BTC/USD", parsePrice: d => parseFloat(d.last) },
+    { name: "Binance", url: "https://data-api.binance.vision/api/v3/ticker/price?symbol=BTCUSDT", parsePrice: d => parseFloat(d.price) },
+    { name: "KuCoin", url: "https://api.kucoin.com/api/ua/v1/market/ticker?tradeType=SPOT&symbol=BTC-USDT", parsePrice: d => parseFloat(d.data.list[0].lastPrice) },
+    { name: "Bybit", url: "https://api.bybit.com/v5/market/tickers?category=spot&symbol=BTCUSDT", parsePrice: d => parseFloat(d.result.list[0].lastPrice) },
+    { name: "OKX", url: "https://www.okx.com/api/v5/market/ticker?instId=BTC-USD", parsePrice: d => parseFloat(d.data[0].last) },
+    { name: "Bitget", url: "https://api.bitget.com/api/v3/market/tickers?category=SPOT&symbol=BTCUSDT", parsePrice: d => parseFloat(d.data[0].lastPrice) }
+  ],
+  CHF: [
+    { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XBTCHF", parsePrice: d => parseFloat(Object.values(d.result)[0].c[0]) },
+    { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-CHF/spot", parsePrice: d => parseFloat(d.data.amount) }
+  ],
+  GBP: [
+    { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XBTGBP", parsePrice: d => parseFloat(Object.values(d.result)[0].c[0]) },
+    { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-GBP/spot", parsePrice: d => parseFloat(d.data.amount) },
+    { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btcgbp/", parsePrice: d => parseFloat(d.last) },
+    { name: "Gemini", url: "https://api.gemini.com/v2/ticker/btcgbp", parsePrice: d => parseFloat(d.close) },
+    { name: "Bitfinex", url: "https://api-pub.bitfinex.com/v2/ticker/tBTCGBP", parsePrice: d => parseFloat(d[6]) },
+    { name: "CEX.IO", url: "https://cex.io/api/ticker/BTC/GBP", parsePrice: d => parseFloat(d.last) }
+  ],
+  JPY: [
+    { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XBTJPY", parsePrice: d => parseFloat(Object.values(d.result)[0].c[0]) },
+    { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-JPY/spot", parsePrice: d => parseFloat(d.data.amount) },
+    { name: "bitFlyer", url: "https://api.bitflyer.com/v1/ticker?product_code=BTC_JPY", parsePrice: d => parseFloat(d.ltp) },
+    { name: "Coincheck", url: "https://coincheck.com/api/ticker?pair=btc_jpy", parsePrice: d => parseFloat(d.last) },
+    { name: "bitbank", url: "https://public.bitbank.cc/btc_jpy/ticker", parsePrice: d => parseFloat(d.data.last) }
+  ]
+};
 
 // === Handle separator toggle ===
 toggle.addEventListener("change", () => {
@@ -111,13 +142,11 @@ function updateValues(source) {
   }
 }
 
-// === Get BTC rate from multiple exchanges and compute median ===
+// === Get BTC rate from exchange endpoints and compute median ===
 async function updateRates() {
-  const suffix = currency.toLowerCase();
+  const configList = exchangeConfigs[currency] || [];
 
-  const supportedExchanges = exchanges.filter(ex => ex.supportedCurrencies.includes(currency));
-
-  if (supportedExchanges.length === 0) {
+  if (configList.length === 0) {
     rateInfo.textContent = `No exchange rate available for ${currency}.`;
     currentRate = 0;
     fiatInput.value = "";
@@ -126,22 +155,21 @@ async function updateRates() {
     return;
   }
 
-  const updated = await Promise.all(supportedExchanges.map(ex =>
-
-    fetch(ex.url.replace(/eur/gi, suffix))
+  const updated = await Promise.all(configList.map(ex => {
+    return fetch(ex.url)
       .then(res => res.json())
       .then(data => {
         try {
-          if (ex.name === "Kraken") return { name: ex.name, rate: parseFloat(Object.values(data.result)[0].c[0]) };
-          if (ex.name === "Binance") return { name: ex.name, rate: parseFloat(data.price) };
-          if (ex.name === "Bitstamp") return { name: ex.name, rate: parseFloat(data.last) };
-          if (ex.name === "Coinbase") return { name: ex.name, rate: parseFloat(data.data.amount) };
-          if (ex.name === "Bitfinex") return { name: ex.name, rate: parseFloat(data.last_price) };
+          const price = ex.parsePrice(data);
+          if (!isNaN(price) && price > 0) {
+            return { name: ex.name, rate: price };
+          }
+          return null;
         } catch {
           return null;
         }
-      }).catch(() => null)
-  ));
+      }).catch(() => null);
+  }));
 
   const valid = updated.filter(e => e && !isNaN(e.rate)).sort((a, b) => a.rate - b.rate);
   if (valid.length > 0) {
