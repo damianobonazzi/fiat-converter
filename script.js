@@ -35,7 +35,14 @@ const exchanges = [
   { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR", supportedCurrencies: ["EUR", "USD", "CHF"] },
   { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btceur/", supportedCurrencies: ["EUR", "USD", "CHF"] },
   { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-EUR/spot", supportedCurrencies: ["EUR", "USD", "CHF"] },
-  { name: "Bitfinex", url: "https://api.bitfinex.com/v1/pubticker/btceur", supportedCurrencies: ["EUR", "USD", "CHF"] }
+  { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price", supportedCurrencies: ["EUR", "USD"] },
+  { name: "Bitfinex", url: "https://api-pub.bitfinex.com/v2/ticker/", supportedCurrencies: ["EUR", "USD", "GBP", "JPY"] },
+  { name: "Gemini", url: "https://api.gemini.com/v2/ticker/", supportedCurrencies: ["EUR", "USD", "GBP", "SGD"] },
+  { name: "CEX.IO", url: "https://cex.io/api/ticker/BTC/", supportedCurrencies: ["EUR", "USD", "GBP"] },
+  { name: "KuCoin", url: "https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=BTC-", supportedCurrencies: ["USDT", "USDC"] },
+  { name: "Bybit", url: "https://api.bybit.com/v5/market/tickers?category=spot&symbol=BTC", supportedCurrencies: ["USDT", "USDC"] },
+  { name: "OKX", url: "https://www.okx.com/api/v5/market/ticker?instId=BTC-", supportedCurrencies: ["USDT", "USDC"] },
+  { name: "Bitget", url: "https://api.bitget.com/api/v2/spot/market/tickers?symbol=BTC", supportedCurrencies: ["USDT", "USDC"] }
 ];
 
 // === Handle separator toggle ===
