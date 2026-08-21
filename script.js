@@ -31,11 +31,11 @@ if (emptyAllBtn) {
 
 // === API endpoints for exchanges ===
 const exchanges = [
-  { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR", supportedCurrencies: ["EUR", "USD"] },
-  { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR", supportedCurrencies: [] },
-  { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btceur/", supportedCurrencies: ["EUR", "USD"] },
+  { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR", supportedCurrencies: ["EUR", "USD", "CHF"] },
+  { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR", supportedCurrencies: ["EUR", "USD", "CHF"] },
+  { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btceur/", supportedCurrencies: ["EUR", "USD", "CHF"] },
   { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-EUR/spot", supportedCurrencies: ["EUR", "USD", "CHF"] },
-  { name: "Bitfinex", url: "https://api.bitfinex.com/v1/pubticker/btceur", supportedCurrencies: ["EUR", "USD"] }
+  { name: "Bitfinex", url: "https://api.bitfinex.com/v1/pubticker/btceur", supportedCurrencies: ["EUR", "USD", "CHF"] }
 ];
 
 // === Handle separator toggle ===
