@@ -18,6 +18,16 @@ const toggle = document.getElementById("decimal-toggle");
 const currencySelect = document.getElementById("currency");
 const rateInfo = document.getElementById("rate-info");
 const circleProgress = document.getElementById("circle-progress");
+const emptyAllBtn = document.getElementById("empty-all-btn");
+
+// === Empty all editable fields ===
+if (emptyAllBtn) {
+  emptyAllBtn.addEventListener("click", () => {
+    fiatInput.value = "";
+    btcInput.value = "";
+    satsInput.value = "";
+  });
+}
 
 // === API endpoints for exchanges ===
 const exchanges = [
@@ -152,4 +162,5 @@ setInterval(() => {
 }, 1000);
 
 // === Initial rate fetch ===
+updateRates();
 updateRates();
