@@ -35,7 +35,6 @@ const exchangeConfigs = {
     { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XBTEUR", parsePrice: d => parseFloat(Object.values(d.result)[0].c[0]) },
     { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-EUR/spot", parsePrice: d => parseFloat(d.data.amount) },
     { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btceur/", parsePrice: d => parseFloat(d.last) },
-    { name: "Gemini", url: "https://api.gemini.com/v2/ticker/btceur", parsePrice: d => parseFloat(d.close) },
     { name: "Bitfinex", url: "https://api-pub.bitfinex.com/v2/ticker/tBTCEUR", parsePrice: d => parseFloat(d[6]) },
     { name: "CEX.IO", url: "https://cex.io/api/ticker/BTC/EUR", parsePrice: d => parseFloat(d.last) },
     { name: "KuCoin", url: "https://api.kucoin.com/api/ua/v1/market/ticker?tradeType=SPOT&symbol=BTC-EUR", parsePrice: d => parseFloat(d.data.list[0].lastPrice) },
@@ -63,13 +62,11 @@ const exchangeConfigs = {
     { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XBTGBP", parsePrice: d => parseFloat(Object.values(d.result)[0].c[0]) },
     { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-GBP/spot", parsePrice: d => parseFloat(d.data.amount) },
     { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btcgbp/", parsePrice: d => parseFloat(d.last) },
-    { name: "Gemini", url: "https://api.gemini.com/v2/ticker/btcgbp", parsePrice: d => parseFloat(d.close) },
     { name: "Bitfinex", url: "https://api-pub.bitfinex.com/v2/ticker/tBTCGBP", parsePrice: d => parseFloat(d[6]) },
     { name: "CEX.IO", url: "https://cex.io/api/ticker/BTC/GBP", parsePrice: d => parseFloat(d.last) }
   ],
   JPY: [
     { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XBTJPY", parsePrice: d => parseFloat(Object.values(d.result)[0].c[0]) },
-    { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-JPY/spot", parsePrice: d => parseFloat(d.data.amount) },
     { name: "bitFlyer", url: "https://api.bitflyer.com/v1/ticker?product_code=BTC_JPY", parsePrice: d => parseFloat(d.ltp) },
     { name: "Coincheck", url: "https://coincheck.com/api/ticker?pair=btc_jpy", parsePrice: d => parseFloat(d.last) },
     { name: "bitbank", url: "https://public.bitbank.cc/btc_jpy/ticker", parsePrice: d => parseFloat(d.data.last) }
