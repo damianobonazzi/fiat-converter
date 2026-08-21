@@ -31,9 +31,9 @@ if (emptyAllBtn) {
 
 // === API endpoints for exchanges ===
 const exchanges = [
-  { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR", supportedCurrencies: ["EUR", "USD", "CHF"] },
-  { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR", supportedCurrencies: ["EUR", "USD", "CHF"] },
-  { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btceur/", supportedCurrencies: ["EUR", "USD", "CHF"] },
+  { name: "Kraken", url: "https://api.kraken.com/0/public/Ticker?pair=XXBTZEUR", supportedCurrencies: ["EUR", "USD"] },
+  { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR", supportedCurrencies: ["EUR", "USD"] },
+  { name: "Bitstamp", url: "https://www.bitstamp.net/api/v2/ticker/btceur/", supportedCurrencies: ["EUR", "USD"] },
   { name: "Coinbase", url: "https://api.coinbase.com/v2/prices/BTC-EUR/spot", supportedCurrencies: ["EUR", "USD", "CHF"] },
   { name: "Binance", url: "https://api.binance.com/api/v3/ticker/price", supportedCurrencies: ["EUR", "USD"] },
   { name: "Bitfinex", url: "https://api-pub.bitfinex.com/v2/ticker/", supportedCurrencies: ["EUR", "USD", "GBP", "JPY"] },
