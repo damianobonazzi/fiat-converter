@@ -52,6 +52,8 @@
 
 .row > label {
     font-size: 1.2em;
+    width: 120px;
+    flex-shrink: 0;
 }
 
 select#currency {
@@ -61,9 +63,11 @@ select#currency {
     border: 1px solid #ccc;
 }
 
-input[type="checkbox"] {
+.row input[type="checkbox"] {
+    flex: none;
     width: 1.5em;
     height: 1.5em;
+    margin-left: 0;
 }
 
 .empty-btn {
@@ -74,6 +78,7 @@ input[type="checkbox"] {
     background-color: #f7931a;
     color: white;
     cursor: pointer;
+    margin-left: 0 !important;
 }
 
 .field-actions {
