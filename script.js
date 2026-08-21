@@ -139,9 +139,21 @@ async function updateRates() {
   const valid = updated.filter(e => e && !isNaN(e.rate)).sort((a, b) => a.rate - b.rate);
   if (valid.length > 0) {
     const mid = Math.floor(valid.length / 2);
-    currentRate = valid[mid].rate;
-    currentExchange = valid[mid].name;
-    rateInfo.textContent = `Median Rate = ${currentRate.toFixed(2)} ${currency} (${currentExchange})`;
+    const medianItem = valid[mid];
+    currentRate = medianItem.rate;
+    currentExchange = medianItem.name;
+
+    const sortedDesc = [...valid].sort((a, b) => b.rate - a.rate);
+    rateInfo.innerHTML = sortedDesc.map(item => {
+      const isMedian = item === medianItem;
+      const formattedRate = item.rate.toFixed(2);
+      if (isMedian) {
+        return `<div style="color: #000; font-weight: bold;">${formattedRate} ${currency} (${item.name})</div>`;
+      } else {
+        return `<div style="color: #666;">${formattedRate} ${currency} (${item.name})</div>`;
+      }
+    }).join("");
+
     updateValues("fiat");
   } else {
     rateInfo.textContent = `Could not fetch rate for ${currency}.`;
