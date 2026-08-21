@@ -9,7 +9,7 @@ Well, get ready to live better:
 💥 Fiat Converter has arrived 💥
 👉 https://damianobonazzi.github.io/fiat-converter/
 
-A web app that translates your sats-based world into fiat language - hassle free.
+A web app that translates your SATs-based world into fiat language - hassle free.
 
 Because other conversion tools often:
 ❌ are based on a single exchange (with fluctuating prices)
