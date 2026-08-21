@@ -163,4 +163,3 @@ setInterval(() => {
 
 // === Initial rate fetch ===
 updateRates();
-updateRates();
