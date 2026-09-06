@@ -1,5 +1,5 @@
 {
-  "id": "/",
+  "id": "./",
   "name": "Fiat Converter",
   "short_name": "FiatConverter",
   "start_url": "./",
@@ -53,31 +53,6 @@
       "type": "image/jpeg",
       "form_factor": "narrow",
       "label": "USD Conversion Screen"
-    }
-  ],
-  "widgets": [
-    {
-      "name": "Fiat Converter Widget",
-      "short_name": "Converter",
-      "description": "Quick conversion between fiat and BTC/Satoshis",
-      "tag": "fiat-converter-widget",
-      "template": "fiat-converter-template",
-      "ms_ac_template": "widgets/template.json",
-      "data": "widgets/data.json",
-      "type": "application/json",
-      "screenshots": [
-        {
-          "src": "screenshots/1-splash.jpg",
-          "sizes": "1080x2340",
-          "label": "Fiat Converter Widget"
-        }
-      ],
-      "icons": [
-        {
-          "src": "icons/icon-192.png",
-          "sizes": "192x192"
-        }
-      ]
     }
   ]
 }
