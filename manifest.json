@@ -15,7 +15,7 @@
   ],
   "iarc_rating_id": "",
   "launch_handler": {
-  "client_mode": "focus-existing"
+    "client_mode": "focus-existing"
   },
   "background_color": "#f7931a",
   "theme_color": "#f7931a",
@@ -32,29 +32,6 @@
       "type": "image/png"
     }
   ],
-  "screenshots": [
-    {
-      "src": "screenshots/1-splash.jpg",
-      "sizes": "1080x2340",
-      "type": "image/jpeg",
-      "form_factor": "narrow",
-      "label": "Splash Screen"
-    },
-    {
-      "src": "screenshots/2-EUR.jpg",
-      "sizes": "1080x2340",
-      "type": "image/jpeg",
-      "form_factor": "narrow",
-      "label": "EUR Conversion Screen"
-    },
-    {
-      "src": "screenshots/3-USD.jpg",
-      "sizes": "1080x2340",
-      "type": "image/jpeg",
-      "form_factor": "narrow",
-      "label": "USD Conversion Screen"
-    }
-    
   "screenshots": [
     {
       "src": "screenshots/1-splash.jpg",
