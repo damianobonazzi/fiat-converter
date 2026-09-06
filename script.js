@@ -214,5 +214,58 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// === Modal interaction logic ===
+const aboutBtn = document.getElementById("about-btn");
+const donateBtn = document.getElementById("donate-btn");
+const aboutModal = document.getElementById("about-modal");
+const donateModal = document.getElementById("donate-modal");
+const aboutClose = document.getElementById("about-close");
+const donateClose = document.getElementById("donate-close");
+
+function openModal(modal) {
+  if (!modal) return;
+  modal.classList.add("active");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function closeModal(modal) {
+  if (!modal) return;
+  modal.classList.remove("active");
+  modal.setAttribute("aria-hidden", "true");
+}
+
+if (aboutBtn && aboutModal) {
+  aboutBtn.addEventListener("click", () => openModal(aboutModal));
+}
+
+if (donateBtn && donateModal) {
+  donateBtn.addEventListener("click", () => openModal(donateModal));
+}
+
+if (aboutClose && aboutModal) {
+  aboutClose.addEventListener("click", () => closeModal(aboutModal));
+}
+
+if (donateClose && donateModal) {
+  donateClose.addEventListener("click", () => closeModal(donateModal));
+}
+
+[aboutModal, donateModal].forEach(modal => {
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal(modal);
+      }
+    });
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeModal(aboutModal);
+    closeModal(donateModal);
+  }
+});
+
 // === Initial rate fetch ===
 updateRates();
