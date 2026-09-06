@@ -4,6 +4,13 @@
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
+  "prefer_related_applications": false,
+  "categories": [
+    "finance",
+    "business",
+    "productivity"
+  ],
+  "iarc_rating_id": "",
   "background_color": "#f7931a",
   "theme_color": "#f7931a",
   "description": "Convert fiat to BTC and Satoshis and viceversa easily.",
