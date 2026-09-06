@@ -56,7 +56,16 @@ self.addEventListener('fetch', function(event) {
       })
       .catch(function() {
         // In caso di assenza di connessione, recupera il file dalla cache
-        return caches.match(event.request);
+        return caches.match(event.request).then(function(cachedResponse) {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          if (event.request.mode === 'navigate') {
+            return caches.match('./index.html').then(function(indexRes) {
+              return indexRes || caches.match('./');
+            });
+          }
+        });
       })
   );
 });
