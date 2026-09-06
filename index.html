@@ -216,5 +216,13 @@ select#currency {
   </div>
 
   <script src="script.js"></script>
+  if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    // Usa il percorso relativo './sw.js' per la compatibilità con GitHub Pages
+    navigator.serviceWorker.register('./sw.js')
+      .then((reg) => console.log('Service Worker registrato:', reg.scope))
+      .catch((err) => console.log('Errore registrazione SW:', err));
+  });
+}
 </body>
 </html>
