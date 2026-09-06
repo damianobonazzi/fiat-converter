@@ -1,4 +1,5 @@
 {
+  "id": "/",
   "name": "Fiat Converter",
   "short_name": "FiatConverter",
   "start_url": "./",
