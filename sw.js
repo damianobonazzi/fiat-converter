@@ -5,8 +5,10 @@ const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './script.js',
-  './manifest.json'
-  // Aggiungi qui eventuali altri asset come ./style.css o ./icon.png se presenti
+  './manifest.json',
+  './style.css',
+  './icons/icon-192.png',
+  './icons/icon-512.png'
 ];
 
 self.addEventListener('install', function(event) {
