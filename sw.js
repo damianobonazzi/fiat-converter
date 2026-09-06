@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fiat-converter-cache-v3';
+const CACHE_NAME = 'fiat-converter-cache-v4';
 
 // Percorsi relativi (fondamentali per GitHub Pages)
 const ASSETS_TO_CACHE = [
