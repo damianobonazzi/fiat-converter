@@ -3,6 +3,7 @@
   "short_name": "FiatConverter",
   "start_url": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#f7931a",
   "theme_color": "#f7931a",
   "description": "Convert fiat to BTC and Satoshis and viceversa easily.",
