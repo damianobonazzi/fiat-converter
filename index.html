@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fiat Converter</title>
   <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
 <meta name="theme-color" content="#f7931a" />
   <style>
     body {
@@ -213,6 +214,60 @@ select#currency {
     <svg width="40" height="40">
       <circle id="circle-progress" r="18" cx="20" cy="20" />
     </svg>
+  </div>
+
+  <footer class="footer-links">
+    <button type="button" id="about-btn" class="link-btn">About</button>
+    <span class="footer-separator">|</span>
+    <button type="button" id="donate-btn" class="link-btn">Donate</button>
+  </footer>
+
+  <!-- About Modal -->
+  <div id="about-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-content">
+      <button type="button" class="modal-close" id="about-close" aria-label="Close">&times;</button>
+      <h2>About</h2>
+      <p>Convert fiat to BTC and Satoshis and viceversa easily.</p>
+    </div>
+  </div>
+
+  <!-- Donate Modal -->
+  <div id="donate-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-content">
+      <button type="button" class="modal-close" id="donate-close" aria-label="Close">&times;</button>
+      <h2>Donate</h2>
+      <p class="donate-intro">Tutte le donazioni verranno dedicate al miglioramento dell'app, ogni contributo è prezioso. Grazie!</p>
+      <div class="donate-addresses">
+        <div class="donate-item">
+          <label class="donate-label" for="donate-ln">LN</label>
+          <div class="input-group">
+            <input type="text" readonly value="damianob@walletofsatoshi.com" id="donate-ln" />
+            <button type="button" onclick="copyToClipboard('donate-ln')" title="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+          </div>
+        </div>
+        <div class="donate-item">
+          <label class="donate-label" for="donate-liquid">Liquid</label>
+          <div class="input-group">
+            <input type="text" readonly value="VJLHXkQUnEgH2rbjhrWgCu672aATeaAUC9wi7fY6QfDTZHSaMm91QmFunvqa5z2byZgjs3zPhzFgErxB" id="donate-liquid" />
+            <button type="button" onclick="copyToClipboard('donate-liquid')" title="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+          </div>
+        </div>
+        <div class="donate-item">
+          <label class="donate-label" for="donate-btc">Bitcoin</label>
+          <div class="input-group">
+            <input type="text" readonly value="bc1qsrh834cw077553etaa4028mph3k7aymr9r66wx" id="donate-btc-addr" />
+            <button type="button" onclick="copyToClipboard('donate-btc-addr')" title="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+          </div>
+        </div>
+        <div class="donate-item">
+          <label class="donate-label" for="donate-btc-legacy">Bitcoin (legacy)</label>
+          <div class="input-group">
+            <input type="text" readonly value="3FRdcgps9NSbapPU33Thy9vHq1znrBuVzS" id="donate-btc-legacy" />
+            <button type="button" onclick="copyToClipboard('donate-btc-legacy')" title="Copy to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
