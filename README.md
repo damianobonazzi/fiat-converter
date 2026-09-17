@@ -31,9 +31,6 @@ Want to always have it at your fingertips?
 📱 Android: Open Chrome, tap the three dots in the top right, then "Add to Home Screen" (or download it from the Google Play Store).
 🍏 iPhone: Open Safari, tap the share icon (the one with the arrow), then "Add to Home Screen".
 
-### Play Store / TWA Verification (Digital Asset Links)
-To run in standalone fullscreen mode without the Custom Tab browser top bar in the Android Play Store app, the site serves `.well-known/assetlinks.json` containing the package name (`fiat.converter`) and the Play Console SHA-256 signing fingerprint.
-
 TL;DR a simple web app to easy convert a Bitcoin output in the equivalent Fiat amount and viceversa, when you have to deal with fiatcoiners!
 
 every help is welcome!
