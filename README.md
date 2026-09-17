@@ -33,4 +33,7 @@ Want to always have it at your fingertips?
 
 TL;DR a simple web app to easy convert a Bitcoin output in the equivalent Fiat amount and viceversa, when you have to deal with fiatcoiners!
 
+## Android TWA & Google Play Console Compatibility
+For details on building/updating the Android TWA wrapper for Google Play Console requirements (Android 15 SDK 35 Edge-to-Edge and Android 16 Large Screens), see [ANDROID_TWA_GUIDE.md](ANDROID_TWA_GUIDE.md).
+
 every help is welcome!
