@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>Fiat Converter</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="serviceworker" href="sw.js" />
@@ -11,11 +11,16 @@
   <style>
     body {
       font-family: sans-serif;
-      padding: 1em;
+      padding-top: calc(1em + env(safe-area-inset-top, 0px));
+      padding-right: calc(1em + env(safe-area-inset-right, 0px));
+      padding-bottom: calc(1em + env(safe-area-inset-bottom, 0px));
+      padding-left: calc(1em + env(safe-area-inset-left, 0px));
       background: #fff;
       color: #333;
       max-width: 600px;
       margin: auto;
+      box-sizing: border-box;
+      min-height: 100vh;
     }
 
 .row {
@@ -145,8 +150,8 @@ select#currency {
 
     #circle-container {
       position: fixed;
-      bottom: 10px;
-      right: 10px;
+      bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+      right: calc(10px + env(safe-area-inset-right, 0px));
       width: 40px;
       height: 40px;
     }
