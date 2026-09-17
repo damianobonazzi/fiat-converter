@@ -1,3 +1,7 @@
+html, body {
+  touch-action: manipulation;
+}
+
 .input-group {
   display: flex;
   width: 100%;
