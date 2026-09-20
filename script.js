@@ -10,6 +10,7 @@ let currentRate = 0;
 let currentExchange = "";
 let useComma = false;
 let currency = "EUR";
+let lastModifiedSource = "fiat";
 
 const fiatInput = document.getElementById("fiat");
 const btcInput = document.getElementById("btc");
@@ -20,12 +21,28 @@ const rateInfo = document.getElementById("rate-info");
 const circleProgress = document.getElementById("circle-progress");
 const emptyAllBtn = document.getElementById("empty-all-btn");
 
+// === Update highlight for last modified input ===
+function updateHighlight() {
+  [fiatInput, btcInput, satsInput].forEach(el => el.classList.remove("last-modified"));
+
+  let activeEl = null;
+  if (lastModifiedSource === "fiat") activeEl = fiatInput;
+  else if (lastModifiedSource === "btc") activeEl = btcInput;
+  else if (lastModifiedSource === "sats") activeEl = satsInput;
+
+  if (activeEl && activeEl.value.trim() !== "") {
+    activeEl.classList.add("last-modified");
+  }
+}
+
 // === Empty all editable fields ===
 if (emptyAllBtn) {
   emptyAllBtn.addEventListener("click", () => {
     fiatInput.value = "";
     btcInput.value = "";
     satsInput.value = "";
+    lastModifiedSource = "fiat";
+    updateHighlight();
   });
 }
 
@@ -77,15 +94,15 @@ const exchangeConfigs = {
 toggle.addEventListener("change", () => {
   useComma = toggle.checked;
 
-  // Riformatta il campo FIAT solo se il valore è valido
-  const value = fiatInput.value;
-  const num = parseInput(value);
-  if (!isNaN(num)) {
-    fiatInput.value = formatOutput(num, 2);
+  if (lastModifiedSource === "fiat") {
+    const num = parseInput(fiatInput.value);
+    if (!isNaN(num)) fiatInput.value = formatOutput(num, 2);
+  } else if (lastModifiedSource === "btc") {
+    const num = parseInput(btcInput.value);
+    if (!isNaN(num)) btcInput.value = formatOutput(num);
   }
 
-  // Aggiorna gli altri campi
-  updateValues("fiat");
+  updateValues(lastModifiedSource);
 });
 
 // === Handle currency change ===
@@ -97,7 +114,8 @@ currencySelect.addEventListener("change", () => {
 
 // === Convert formatted input to number ===
 function parseInput(value) {
-  if (useComma) value = value.replace(",", ".");
+  if (!value) return NaN;
+  value = value.replace(",", ".");
   return parseFloat(value);
 }
 
@@ -109,9 +127,21 @@ function formatOutput(value, decimals = 8) {
 }
 
 // === Handle input events ===
-fiatInput.addEventListener("input", () => updateValues("fiat"));
-btcInput.addEventListener("input", () => updateValues("btc"));
-satsInput.addEventListener("input", () => updateValues("sats"));
+fiatInput.addEventListener("input", () => {
+  lastModifiedSource = "fiat";
+  updateValues("fiat");
+  updateHighlight();
+});
+btcInput.addEventListener("input", () => {
+  lastModifiedSource = "btc";
+  updateValues("btc");
+  updateHighlight();
+});
+satsInput.addEventListener("input", () => {
+  lastModifiedSource = "sats";
+  updateValues("sats");
+  updateHighlight();
+});
 
 // === Main conversion logic ===
 function updateValues(source) {
@@ -121,21 +151,36 @@ function updateValues(source) {
 
   if (!currentRate) return;
 
-  if (source === "fiat" && !isNaN(fiatVal)) {
-    const btc = fiatVal / currentRate;
-    const sats = btc * 1e8;
-    btcInput.value = formatOutput(btc);
-    satsInput.value = Math.round(sats);
-  } else if (source === "btc" && !isNaN(btcVal)) {
-    const fiat = btcVal * currentRate;
-    const sats = btcVal * 1e8;
-    fiatInput.value = formatOutput(fiat, 2);
-    satsInput.value = Math.round(sats);
-  } else if (source === "sats" && !isNaN(satsVal)) {
-    const btc = satsVal / 1e8;
-    const fiat = btc * currentRate;
-    btcInput.value = formatOutput(btc);
-    fiatInput.value = formatOutput(fiat, 2);
+  if (source === "fiat") {
+    if (isNaN(fiatVal) || fiatInput.value.trim() === "") {
+      btcInput.value = "";
+      satsInput.value = "";
+    } else {
+      const btc = fiatVal / currentRate;
+      const sats = btc * 1e8;
+      btcInput.value = formatOutput(btc);
+      satsInput.value = Math.round(sats);
+    }
+  } else if (source === "btc") {
+    if (isNaN(btcVal) || btcInput.value.trim() === "") {
+      fiatInput.value = "";
+      satsInput.value = "";
+    } else {
+      const fiat = btcVal * currentRate;
+      const sats = btcVal * 1e8;
+      fiatInput.value = formatOutput(fiat, 2);
+      satsInput.value = Math.round(sats);
+    }
+  } else if (source === "sats") {
+    if (isNaN(satsVal) || satsInput.value.trim() === "") {
+      btcInput.value = "";
+      fiatInput.value = "";
+    } else {
+      const btc = satsVal / 1e8;
+      const fiat = btc * currentRate;
+      btcInput.value = formatOutput(btc);
+      fiatInput.value = formatOutput(fiat, 2);
+    }
   }
 }
 
@@ -186,7 +231,8 @@ async function updateRates() {
       }
     }).join("");
 
-    updateValues("fiat");
+    updateValues(lastModifiedSource);
+    updateHighlight();
   } else {
     rateInfo.textContent = `Could not fetch rate for ${currency}.`;
     currentRate = 0;
