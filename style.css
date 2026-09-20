@@ -33,6 +33,16 @@ html, body {
   min-width: 40px;
 }
 
+.input-group input.last-modified {
+  border: 2px solid #333;
+  border-right: none;
+}
+
+.input-group input.last-modified + button {
+  border: 2px solid #333;
+  border-left: none;
+}
+
 /* Footer links styling */
 .footer-links {
   margin-top: 2em;
