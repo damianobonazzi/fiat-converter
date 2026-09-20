@@ -215,14 +215,23 @@ async function updateRates() {
 
   const valid = updated.filter(e => e && !isNaN(e.rate)).sort((a, b) => a.rate - b.rate);
   if (valid.length > 0) {
-    const mid = Math.floor(valid.length / 2);
-    const medianItem = valid[mid];
-    currentRate = medianItem.rate;
-    currentExchange = medianItem.name;
+    let medianItems = [];
+    if (valid.length % 2 === 1) {
+      const mid = Math.floor(valid.length / 2);
+      medianItems = [valid[mid]];
+      currentRate = valid[mid].rate;
+      currentExchange = valid[mid].name;
+    } else {
+      const mid1 = valid.length / 2 - 1;
+      const mid2 = valid.length / 2;
+      medianItems = [valid[mid1], valid[mid2]];
+      currentRate = (valid[mid1].rate + valid[mid2].rate) / 2;
+      currentExchange = `${valid[mid1].name}, ${valid[mid2].name}`;
+    }
 
     const sortedDesc = [...valid].sort((a, b) => b.rate - a.rate);
     rateInfo.innerHTML = sortedDesc.map(item => {
-      const isMedian = item === medianItem;
+      const isMedian = medianItems.includes(item);
       const formattedRate = item.rate.toFixed(2);
       if (isMedian) {
         return `<div style="color: #000; font-weight: bold;">${formattedRate} ${currency} (${item.name})</div>`;
