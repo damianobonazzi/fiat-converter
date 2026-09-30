@@ -3,6 +3,7 @@
   "name": "Fiat Converter",
   "short_name": "FiatConverter",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "lang": "en",
