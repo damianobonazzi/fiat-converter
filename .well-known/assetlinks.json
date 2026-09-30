@@ -1,8 +1,0 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "fiat.converter",
-        "sha256_cert_fingerprints": ["50:DD:E3:26:1C:A0:50:76:29:60:DB:CA:39:39:8F:64:FA:5F:80:11:5A:A7:BB:2A:B3:1E:1B:53:B2:F0:65:EA"]
-      }
-    }]
