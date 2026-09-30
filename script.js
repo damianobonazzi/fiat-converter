@@ -262,16 +262,9 @@ setInterval(() => {
 
 // === Service Worker Registration ===
 if ('serviceWorker' in navigator) {
-  const registerSW = () => {
-    navigator.serviceWorker.register('./sw.js', { scope: './' })
-      .then(reg => console.log('Service Worker registered:', reg))
-      .catch(err => console.error('Service Worker registration failed:', err));
-  };
-  if (document.readyState === 'complete') {
-    registerSW();
-  } else {
-    window.addEventListener('load', registerSW);
-  }
+  navigator.serviceWorker.register('./sw.js', { scope: './' })
+    .then(reg => console.log('Service Worker registered:', reg))
+    .catch(err => console.error('Service Worker registration failed:', err));
 }
 
 // === Modal interaction logic ===
