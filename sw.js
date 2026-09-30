@@ -62,9 +62,10 @@ self.addEventListener('fetch', function(event) {
           }
           if (event.request.mode === 'navigate') {
             return caches.match('./index.html').then(function(indexRes) {
-              return indexRes || caches.match('./');
+              return indexRes || caches.match('./') || Response.error();
             });
           }
+          return Response.error();
         });
       })
   );
